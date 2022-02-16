@@ -120,18 +120,20 @@ public class FileTransferBackground extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        logMessage("eventLabel='FileTransferBackground Starting' action='" + action + "'");
         FileTransferBackground self = this;
         if (action.equalsIgnoreCase("destroy")) {
             this.destroy();
             return true;
         }
-        if (action.equalsIgnoreCase("initManager")) {
-            self.initManager(args.get(0).toString(), callbackContext);
-            return true;
-        }
+
         cordova.getThreadPool().execute(new Runnable() {
             public void run() {
                 try {
+                    if (action.equalsIgnoreCase("initManager")) {
+                        self.initManager(args.get(0).toString(), callbackContext);
+                        return true;
+                    }
                     if (action.equalsIgnoreCase("removeUpload")) {
                         self.removeUpload(args.get(0).toString(), callbackContext);
                     } else if (action.equalsIgnoreCase("acknowledgeEvent")) {
