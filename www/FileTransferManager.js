@@ -11,7 +11,7 @@ var FileTransferManager = function (options, callback) {
   }
 
   this.callback = callback
-  exec(this.callback, null, 'FileTransferBackground', 'initManager', [this.options])
+  exec(this.callback, this.callback, 'FileTransferBackground', 'initManager', [this.options])
 }
 
 FileTransferManager.prototype.startUpload = function (payload) {

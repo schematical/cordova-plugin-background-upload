@@ -132,9 +132,7 @@ public class FileTransferBackground extends CordovaPlugin {
                 try {
                     if (action.equalsIgnoreCase("initManager")) {
                         self.initManager(args.get(0).toString(), callbackContext);
-                        return true;
-                    }
-                    if (action.equalsIgnoreCase("removeUpload")) {
+                    } else if (action.equalsIgnoreCase("removeUpload")) {
                         self.removeUpload(args.get(0).toString(), callbackContext);
                     } else if (action.equalsIgnoreCase("acknowledgeEvent")) {
                         self.acknowledgeEvent(args.getString(0), callbackContext);
@@ -156,9 +154,12 @@ public class FileTransferBackground extends CordovaPlugin {
     }
 
     private void initManager(String options, final CallbackContext callbackContext) throws IllegalStateException {
+      logMessage("eventLabel='FileTransferBackground initManager' ");
         if (this.ready) {
-            throw new IllegalStateException("initManager was called twice");
+            logMessage("eventLabel='FileTransferBackground initManager already ready' ");
+            return; // throw new IllegalStateException("initManager was called twice");
         }
+        logMessage("eventLabel='FileTransferBackground initManager starting because not ready' ");
         this.uploadCallback = callbackContext;
         this.ready = true;
         this.globalObserver = new RequestObserver(this.cordova.getActivity().getApplicationContext(), broadcastReceiver);
