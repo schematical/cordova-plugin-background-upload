@@ -1,4 +1,5 @@
 def minSdkVersion = 21
+/*
 if(cordovaConfig.MIN_SDK_VERSION < minSdkVersion){
     ext.cdvMinSdkVersion = minSdkVersion
-}
+} */
